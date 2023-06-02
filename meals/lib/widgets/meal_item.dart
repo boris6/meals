@@ -11,6 +11,32 @@ class MealItem extends StatelessWidget {
 
   final Meal meal;
 
+  String get complexityText {
+    switch (meal.complexity) {
+      case Complexity.simple:
+        return 'Simple';
+      case Complexity.challenging:
+        return 'Challenging';
+      case Complexity.hard:
+        return 'Hard';
+      default:
+        throw Exception('Unknown complexity: ${meal.complexity}');
+    }
+  }
+
+  String get affordabilityText {
+    switch (meal.affordability) {
+      case Affordability.affordable:
+        return 'Affordable';
+      case Affordability.pricey:
+        return 'Pricey';
+      case Affordability.luxurious:
+        return 'Luxurious';
+      default:
+        throw Exception('Unknown affordability: ${meal.affordability}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -52,11 +78,13 @@ class MealItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           MealItemTrait(Icons.schedule, '${meal.duration} min'),
-                          MealItemTrait(Icons.work, meal.complexity.toString()),
-                          MealItemTrait(Icons.attach_money,
-                              meal.affordability.toString()),
+                          const SizedBox(width: 12),
+                          MealItemTrait(Icons.work, complexityText),
+                          const SizedBox(width: 12),
+                          MealItemTrait(Icons.attach_money, affordabilityText),
                         ],
                       )
                     ],
